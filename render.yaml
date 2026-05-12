@@ -1,13 +1,11 @@
-services:
-  # PostgreSQL database
-  - type: postgres
-    name: palette-db
-    region: oregon
-    plan: free
+databases:
+  - name: palette-db
     databaseName: palette
-    databaseUser: palette
+    user: palette
+    plan: free
+    region: oregon
 
-  # Web service
+services:
   - type: web
     name: palette-by-stithi
     runtime: node
@@ -25,4 +23,3 @@ services:
           property: connectionString
       - key: ANTHROPIC_API_KEY
         sync: false
-    autoDeploy: true
