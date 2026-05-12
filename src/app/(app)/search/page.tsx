@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { Material } from '@/types'
 import SearchScreen from './SearchScreen'
 
 export default async function SearchPage() {
@@ -6,6 +7,9 @@ export default async function SearchPage() {
     include: { favourites: true },
     orderBy: { name: 'asc' },
   })
-  const withFav = materials.map((m) => ({ ...m, isFavourite: m.favourites.length > 0, favourites: undefined }))
+  const withFav: Material[] = materials.map((m) => ({
+    ...m,
+    isFavourite: m.favourites.length > 0,
+  })) as Material[]
   return <SearchScreen materials={withFav} />
 }

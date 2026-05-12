@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { Material } from '@/types'
 import { notFound } from 'next/navigation'
 import MaterialDetail from './MaterialDetail'
 
@@ -8,6 +9,6 @@ export default async function MaterialPage({ params }: { params: { id: string } 
     include: { favourites: true },
   })
   if (!material) notFound()
-  const m = { ...material, isFavourite: material.favourites.length > 0, favourites: undefined }
+  const m: Material = { ...material, isFavourite: material.favourites.length > 0 } as Material
   return <MaterialDetail material={m} />
 }

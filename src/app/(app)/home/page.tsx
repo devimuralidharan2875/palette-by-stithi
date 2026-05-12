@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { Material } from '@/types'
 import HomeScreen from './HomeScreen'
 
 export default async function HomePage() {
@@ -14,8 +15,11 @@ export default async function HomePage() {
     }),
   ])
 
-  const withFav = (mats: typeof materials) =>
-    mats.map((m) => ({ ...m, isFavourite: m.favourites.length > 0, favourites: undefined }))
+  const withFav = (mats: typeof materials): Material[] =>
+    mats.map((m) => ({
+      ...m,
+      isFavourite: m.favourites.length > 0,
+    })) as Material[]
 
   return <HomeScreen materials={withFav(materials)} featured={withFav(featured)} />
 }
