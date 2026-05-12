@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cr: #F7F2EA;
+  --cr2: #EFE8DA;
+  --cr3: #E6DDD0;
+  --br: #B8922A;
+  --brl: #E8D49A;
+  --brp: #F5EDD6;
+  --ink: #1C1710;
+  --ink2: #3D3426;
+  --mu: #8C7F6E;
+  --gn: #2E4A2E;
+  --gnb: rgba(74, 103, 65, 0.12);
+  --rd: #7B3D2E;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  font-family: var(--font-sans, 'DM Sans', sans-serif);
+  background: var(--cr);
+  color: var(--ink);
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif {
+  font-family: var(--font-serif, 'Cormorant Garamond', serif);
+}
+
+/* Chettinad pattern overlay */
+.chettinad-pattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(184, 146, 42, 0.1) 0, rgba(184, 146, 42, 0.1) 1px, transparent 0, transparent 50%),
+    repeating-linear-gradient(-45deg, rgba(184, 146, 42, 0.1) 0, rgba(184, 146, 42, 0.1) 1px, transparent 0, transparent 50%);
+  background-size: 14px 14px;
+  pointer-events: none;
+}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.25s ease forwards;
+}
+
+/* Stagger delays */
+.delay-0 { animation-delay: 0ms; }
+.delay-50 { animation-delay: 50ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-250 { animation-delay: 250ms; }
+
+/* Safe area bottom padding */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 4px);
+}
+
+/* Mobile app shell */
+#app-shell {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: 430px;
+  margin: 0 auto;
+  background: var(--cr);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brass rule */
+.brass-rule {
+  height: 1px;
+  background: var(--brl);
+  margin: 0 16px 4px;
+}

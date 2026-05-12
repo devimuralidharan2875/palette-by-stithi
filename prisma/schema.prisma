@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Material {
+  id                  String   @id @default(cuid())
+  name                String
+  brand               String
+  location            String
+  category            String   // e.g. int-flooring, land-shade
+  subcategory         String   // display label e.g. "Handmade tile"
+  color               String   // hex for swatch
+  price               Float
+  unit                String   // sq ft, unit, litre
+  available           Boolean  @default(true)
+  availNote           String?
+  featured            Boolean  @default(false)
+  tags                String[] // array of tag strings
+  finish              String?
+  size                String?
+  materialComposition String?
+  priceRange          String?
+
+  // Nested JSON fields
+  specs     Json     @default("{}")
+  whereUse  Json     @default("{}")  // {residential, commercial, institutional, exterior}
+  pros      String[]
+  cons      String[]
+  maintenance Json   @default("[]")
+  installation Json  @default("{}")
+  suppliers   Json   @default("[]")
+  pairs       String[]
+
+  // Relations
+  favourites  Favourite[]
+  roomMaterials RoomMaterial[]
+  boardItems  BoardItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([featured])
+}
+
+model Project {
+  id       String  @id @default(cuid())
+  name     String
+  location String
+  client   String
+  status   String  @default("active") // active | completed | paused
+  color    String  @default("#3D2E20")
+
+  rooms    Room[]
+  boards   Board[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Room {
+  id        String @id @default(cuid())
+  name      String
+  area      Float?
+  notes     String?
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  roomMaterials RoomMaterial[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomMaterial {
+  id         String @id @default(cuid())
+  room       Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId     String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  materialId String
+  notes      String?
+
+  @@unique([roomId, materialId])
+}
+
+model Board {
+  id        String @id @default(cuid())
+  name      String
+  notes     String?
+
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  projectId String?
+
+  items     BoardItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BoardItem {
+  id         String   @id @default(cuid())
+  board      Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId    String
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  materialId String
+  position   Int      @default(0)
+  notes      String?
+
+  @@unique([boardId, materialId])
+}
+
+model Favourite {
+  id         String   @id @default(cuid())
+  material   Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  materialId String   @unique
+
+  createdAt DateTime @default(now())
+}
+
+model PalConversation {
+  id       String @id @default(cuid())
+  messages Json   @default("[]") // [{role, content, timestamp}]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
