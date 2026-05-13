@@ -9,6 +9,10 @@ export default async function MaterialPage({ params }: { params: { id: string } 
     include: { favourites: true },
   })
   if (!material) notFound()
-  const m: Material = { ...material, isFavourite: material.favourites.length > 0 } as Material
+  const { favourites, ...rest } = material
+  const m: Material = {
+    ...rest,
+    isFavourite: favourites.length > 0,
+  } as Material
   return <MaterialDetail material={m} />
 }

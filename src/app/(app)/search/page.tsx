@@ -7,9 +7,12 @@ export default async function SearchPage() {
     include: { favourites: true },
     orderBy: { name: 'asc' },
   })
-  const withFav: Material[] = materials.map((m) => ({
-    ...m,
-    isFavourite: m.favourites.length > 0,
-  })) as Material[]
+  const withFav: Material[] = materials.map((m) => {
+    const { favourites, ...rest } = m
+    return {
+      ...rest,
+      isFavourite: favourites.length > 0,
+    } as Material
+  })
   return <SearchScreen materials={withFav} />
 }

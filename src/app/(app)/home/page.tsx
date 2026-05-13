@@ -16,10 +16,13 @@ export default async function HomePage() {
   ])
 
   const withFav = (mats: typeof materials): Material[] =>
-    mats.map((m) => ({
-      ...m,
-      isFavourite: m.favourites.length > 0,
-    })) as Material[]
+    mats.map((m) => {
+      const { favourites, ...rest } = m
+      return {
+        ...rest,
+        isFavourite: favourites.length > 0,
+      } as Material
+    })
 
   return <HomeScreen materials={withFav(materials)} featured={withFav(featured)} />
 }
