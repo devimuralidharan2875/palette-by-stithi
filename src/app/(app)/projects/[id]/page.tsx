@@ -2,6 +2,9 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import ProjectDetail from './ProjectDetail'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
   const project = await prisma.project.findUnique({
     where: { id: params.id },

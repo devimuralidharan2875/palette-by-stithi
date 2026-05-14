@@ -2,6 +2,9 @@ import { prisma } from '@/lib/prisma'
 import { Material } from '@/types'
 import HomeScreen from './HomeScreen'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function HomePage() {
   const [materials, featured] = await Promise.all([
     prisma.material.findMany({

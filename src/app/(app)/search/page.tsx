@@ -2,6 +2,9 @@ import { prisma } from '@/lib/prisma'
 import { Material } from '@/types'
 import SearchScreen from './SearchScreen'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function SearchPage() {
   const materials = await prisma.material.findMany({
     include: { favourites: true },
