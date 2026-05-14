@@ -21,7 +21,7 @@ export default async function HomePage() {
       return {
         ...rest,
         isFavourite: favourites.length > 0,
-      } as Material
+      } as unknown as Material
     })
 
   return <HomeScreen materials={withFav(materials)} featured={withFav(featured)} />

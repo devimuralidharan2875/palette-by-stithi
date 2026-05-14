@@ -12,7 +12,7 @@ export default async function SearchPage() {
     return {
       ...rest,
       isFavourite: favourites.length > 0,
-    } as Material
+    } as unknown as Material
   })
   return <SearchScreen materials={withFav} />
 }
