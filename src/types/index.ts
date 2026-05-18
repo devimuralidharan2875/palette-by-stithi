@@ -6,6 +6,7 @@ export interface Material {
   category: string
   subcategory: string
   color: string
+  imageUrl?: string | null
   price: number
   unit: string
   available: boolean

@@ -37,6 +37,17 @@ export default function MaterialDetail({ material: m }: Props) {
     <div className="flex flex-col h-full overflow-hidden" style={{ background: 'var(--cr)' }}>
       {/* Hero swatch */}
       <div className="relative h-[200px] flex-shrink-0 flex flex-col justify-between" style={{ background: m.color }}>
+        {m.imageUrl && (
+          <img 
+            src={m.imageUrl} 
+            alt={m.name}
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              // Fallback to color swatch if image fails to load
+              e.currentTarget.style.display = 'none'
+            }}
+          />
+        )}
         <div className="chettinad-pattern" />
         <div className="relative flex items-center justify-between px-3.5 pt-4">
           <button onClick={() => router.back()} className="w-[34px] h-[34px] rounded-full flex items-center justify-center" style={{ background: 'rgba(247,242,234,.2)' }}>
@@ -49,6 +60,22 @@ export default function MaterialDetail({ material: m }: Props) {
             <button className="w-[34px] h-[34px] rounded-full flex items-center justify-center" style={{ background: 'rgba(247,242,234,.2)' }}>
               <Share2 size={18} strokeWidth={1.8} color="#F7F2EA" />
             </button>
+            {m.imageUrl && (
+              <a 
+                href={m.imageUrl} 
+                download={`${m.name.replace(/\s+/g, '-')}.jpg`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-[34px] h-[34px] rounded-full flex items-center justify-center" 
+                style={{ background: 'rgba(247,242,234,.2)' }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F7F2EA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </a>
+            )}
           </div>
         </div>
         <div className="relative px-3.5 pb-3.5">

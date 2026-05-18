@@ -102,6 +102,7 @@ function mapIndiamartToMaterial(item: any) {
     category,
     subcategory,
     color,
+    imageUrl: item.image || null, // Import image URL from Indiamart
     price,
     unit,
     available: item.availability === 'https://schema.org/InStock',

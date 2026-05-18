@@ -1,16 +1,10 @@
-databases:
-  - name: palette-db
-    databaseName: palette
-    user: palette
-    plan: free
-    region: oregon
-
 services:
+  # Web service
   - type: web
     name: palette-by-stithi
     runtime: node
     region: oregon
-    plan: free
+    plan: starter
     branch: main
     buildCommand: npm install && npm run build
     startCommand: npm start
@@ -23,3 +17,13 @@ services:
           property: connectionString
       - key: ANTHROPIC_API_KEY
         sync: false
+    autoDeploy: true
+
+  # PostgreSQL database
+  - type: pgsql
+    name: palette-db
+    region: oregon
+    plan: starter
+    databaseName: palette
+    databaseUser: palette
+    ipAllowList: []

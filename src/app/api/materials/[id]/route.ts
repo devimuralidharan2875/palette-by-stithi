@@ -8,7 +8,8 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
       include: { favourites: true },
     })
     if (!material) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    return NextResponse.json({ data: { ...material, isFavourite: material.favourites.length > 0 } })
+    const { favourites, ...rest } = material
+    return NextResponse.json({ data: { ...rest, isFavourite: favourites.length > 0 } })
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch material' }, { status: 500 })
   }

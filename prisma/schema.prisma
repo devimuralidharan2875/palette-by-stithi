@@ -15,6 +15,7 @@ model Material {
   category            String   // e.g. int-flooring, land-shade
   subcategory         String   // display label e.g. "Handmade tile"
   color               String   // hex for swatch
+  imageUrl            String?  // optional product image URL
   price               Float
   unit                String   // sq ft, unit, litre
   available           Boolean  @default(true)

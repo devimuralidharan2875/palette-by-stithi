@@ -32,11 +32,13 @@ export async function GET(request: NextRequest) {
       include: { favourites: true },
     })
 
-    const withFav = materials.map(m => ({
-      ...m,
-      isFavourite: m.favourites.length > 0,
-      favourites: undefined,
-    }))
+    const withFav = materials.map(m => {
+      const { favourites, ...rest } = m
+      return {
+        ...rest,
+        isFavourite: favourites.length > 0,
+      }
+    })
 
     return NextResponse.json({ data: withFav })
   } catch (error) {
