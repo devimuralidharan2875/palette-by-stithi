@@ -5,9 +5,10 @@ import ProjectDetail from './ProjectDetail'
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const project = await prisma.project.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       rooms: {
         include: { roomMaterials: { include: { material: true } } },
